@@ -1,0 +1,8 @@
+projects_module.api_projects:
+  path: '/api/projects'
+  defaults:
+    _controller: '\Drupal\projects_type\Controller\ProjectsApiController::getProjects'
+    _format: 'json'
+  methods: [GET]
+  requirements:
+    _permission: 'access content'
