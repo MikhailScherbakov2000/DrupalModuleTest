@@ -1,5 +1,0 @@
-name: 'project_type'
-type: module
-description: 'Добавляет тип контента Проект и блок с последними проектами'
-core_version_requirement: ^8 || ^9 || ^10
-package: Custom
