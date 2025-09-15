@@ -1,0 +1,12 @@
+<h2>{{ title }}</h2>
+<ul class="latest-projects-list">
+  {% for item in items %}
+    <li class="latest-project-item">
+      <a href="{{ item.url }}">{{ item.title }}</a> — {{ item.date }}
+      {% if item.image %}
+        <br>
+        <img src="{{ item.image }}" alt="{{ item.title }}">
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>

@@ -1,0 +1,5 @@
+name: 'project_type'
+type: module
+description: 'Модуль для создания типа проекта с настройками отображения'
+core_version_requirement: ^8 || ^9 || ^10
+package: Custom

@@ -1,0 +1,12 @@
+langcode: ru
+status: true
+dependencies:
+  module:
+    - node
+    - datetime
+name: 'Проект'
+type: project
+description: 'Тип материала для проектов'
+help: ''
+new_revision: false
+display_submitted: true

@@ -1,0 +1,8 @@
+projects_api:
+  version: 1.x
+  js:
+    js/projects_api.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings

@@ -1,0 +1,10 @@
+<?php
+function project_type_theme($existing, $type, $theme, $path) {
+  return [
+    'latest_projects' => [
+      'variables' => ['items' => NULL, 'title' => NULL],
+      'template' => 'latest-projects',
+      'path' => drupal_get_path('module', 'project_type') . '/templates',
+    ],
+  ];
+}

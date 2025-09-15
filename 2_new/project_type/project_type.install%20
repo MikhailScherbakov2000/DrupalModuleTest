@@ -1,0 +1,95 @@
+<?php
+
+use Drupal\node\Entity\NodeType;
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\field\Entity\FieldConfig;
+
+/**
+ * Имплементация hook_install() модуля project_type.
+ */
+function project_type_install() {
+  // Создаём тип контента "Проект", если он ещё не существует.
+  if (!NodeType::load('project')) {
+    $project = NodeType::create([
+      'type' => 'project',
+      'name' => 'Проект',
+    ]);
+    $project->save();
+  }
+
+  // Создаём поле "Описание" - текст длинный.
+  if (!FieldStorageConfig::loadByName('node', 'field_description')) {
+    FieldStorageConfig::create([
+      'field_name' => 'field_description',
+      'entity_type' => 'node',
+      'type' => 'text_long',
+      'cardinality' => 1,
+      'settings' => [
+        'max_length' => 5000,
+      ],
+    ])->save();
+  }
+  if (!FieldConfig::loadByName('node', 'project', 'field_description')) {
+    FieldConfig::create([
+      'field_name' => 'field_description',
+      'entity_type' => 'node',
+      'bundle' => 'project',
+      'label' => 'Описание',
+      'required' => FALSE,
+      'settings' => [],
+      'description' => 'Отдельное поле Описание',
+    ])->save();
+  }
+
+  // Создаём поле "Изображение".
+  if (!FieldStorageConfig::loadByName('node', 'field_image')) {
+    FieldStorageConfig::create([
+      'field_name' => 'field_image',
+      'entity_type' => 'node',
+      'type' => 'image',
+      'cardinality' => 1,
+      'settings' => [
+        'uri_scheme' => 'public',
+        'default_image' => [],
+      ],
+    ])->save();
+  }
+  if (!FieldConfig::loadByName('node', 'project', 'field_image')) {
+    FieldConfig::create([
+      'field_name' => 'field_image',
+      'entity_type' => 'node',
+      'bundle' => 'project',
+      'label' => 'Изображение',
+      'required' => FALSE,
+      'settings' => [
+        'alt_field' => TRUE,
+        'title_field' => FALSE,
+      ],
+      'description' => 'Изображение проекта',
+    ])->save();
+  }
+
+  // Создаём поле "Дата окончания" (тип datetime, с форматом date).
+  if (!FieldStorageConfig::loadByName('node', 'field_end_date')) {
+    FieldStorageConfig::create([
+      'field_name' => 'field_end_date',
+      'entity_type' => 'node',
+      'type' => 'datetime',
+      'cardinality' => 1,
+      'settings' => [
+        'datetime_type' => 'date',
+      ],
+    ])->save();
+  }
+  if (!FieldConfig::loadByName('node', 'project', 'field_end_date')) {
+    FieldConfig::create([
+      'field_name' => 'field_end_date',
+      'entity_type' => 'node',
+      'bundle' => 'project',
+      'label' => 'Дата окончания',
+      'required' => FALSE,
+      'settings' => [],
+      'description' => 'Дата завершения проекта',
+    ])->save();
+  }
+}

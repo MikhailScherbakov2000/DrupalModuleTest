@@ -1,0 +1,7 @@
+projects_type.latest_json:
+  path: '/projects-type/latest-json'
+  defaults:
+    _controller: '\Drupal\projects_type\Controller\ProjectsJsonController::latestJson'
+    _title: 'Latest projects JSON'
+  requirements:
+    _permission: 'access content'

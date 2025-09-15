@@ -1,0 +1,44 @@
+<?php
+namespace Drupal\projects_module\Controller;
+
+use Drupal\Core\Controller\ControllerBase;
+use Drupal\node\Entity\Node;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
+class ProjectsApiController extends ControllerBase {
+
+  public function getProjects() {
+    $query = \Drupal::entityQuery('node')
+      ->condition('status', 1)
+      ->condition('type', 'project')
+      ->sort('created', 'DESC')
+      ->range(0, 10);
+    $nids = $query->execute();
+
+    $nodes = Node::loadMultiple($nids);
+    $projects = [];
+
+    foreach ($nodes as $node) {
+      $project = [
+        'title' => $node->label(),
+        'description' => $node->get('body')->value,
+        'image_url' => '',
+        'end_date' => $node->get('field_end_date')->value,
+      ];
+
+      if (!$node->get('field_project_image')->isEmpty()) {
+        $file = $node->get('field_project_image')->entity;
+        if ($file) {
+          $uri = $file->getFileUri();
+          $project['image_url'] = file_create_url($uri);
+        }
+      }
+
+      $projects[] = $project;
+    }
+
+    // Возвращаем JSON-ответ.
+    return new JsonResponse(['projects' => $projects]);
+  }
+
+}
